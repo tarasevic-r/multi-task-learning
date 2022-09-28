@@ -17,8 +17,6 @@ warnings.filterwarnings("ignore")
 LOG_LEVEL = 'info'
 # configure logger
 if len(logging.getLogger().handlers) > 0:
-    # The Lambda environment pre-configures a handler logging to stderr. If a handler is already configured,
-    # `.basicConfig` does not execute. Thus we set the level directly.
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.getLevelName(LOG_LEVEL.upper()))
 else:
@@ -193,14 +191,3 @@ if __name__ == '__main__':
     MTL_model.train()
     # Save trained model
     MTL_model.save_model()
-
-test = pd.DataFrame(data=[[5.62, 1.26, -0.49, 6.63, 3.77, -0.13, -0.91]], columns=['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'z'])
-X = inference_input_processing(test)
-
-#
-# MTL_model.load_model()
-# MTL_model.inference(X)
-# MTL_model._get_model_params()
-# keras.utils.plot_model(MTL_model, show_dtype=True,
-#                        show_layer_names=True, show_shapes=True,
-#                        to_file='model.png')
