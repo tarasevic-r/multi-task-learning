@@ -11,9 +11,23 @@ from data_loader.simple_mtl_data_loader import custom_data_loader
 from models.mtl_model import build_model
 from utils.data_processing import inference_input_processing
 
+import warnings
+warnings.filterwarnings("ignore")
 
-# os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+LOG_LEVEL = 'info'
+# configure logger
+if len(logging.getLogger().handlers) > 0:
+    # The Lambda environment pre-configures a handler logging to stderr. If a handler is already configured,
+    # `.basicConfig` does not execute. Thus we set the level directly.
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.getLevelName(LOG_LEVEL.upper()))
+else:
+    logging.basicConfig(
+        format='%(asctime)s %(levelname)-8s %(message)s',
+        level=logging.getLevelName(LOG_LEVEL.upper()),
+        datefmt='%Y-%m-%d %H:%M:%S')
 
+log = logging.getLogger(__name__)
 
 
 
@@ -40,7 +54,7 @@ class ModelTraining:
             validation_steps=1,
             validation_batch_size=self.batch_size,
             shuffle=True,
-            verbose=1
+            verbose=2
         )
         logging.info("Model trained!")
         self.plot_both_task_loss()
@@ -143,33 +157,46 @@ class ModelTraining:
         plt.ylabel('Accuracy')
         plt.legend()
 
-#
-# if __name__ == '__main__':
-#     # load dataset
-#     data = pd.read_csv("./data/data.csv")
-#     N = 900000
-#     batch_size = 12 # define model training batch size
-#     data_loader_batch_size = int(batch_size / 2) # batch size for each task (number of samples from each task must be equal in final batch)
-#
-#     # Simple manual split to train and validation datasets
-#     ## TODO: furhter improvments dynamic train and validation split in one generator
-#     df_train = data.iloc[batch_size:N, :]
-#     df_val = pd.concat([data.iloc[:batch_size, :], data.iloc[N:N + batch_size, :]], ignore_index=True)
-#
-#     # Crate gernerator objects for train and validation
-#     training_data_loader = custom_data_loader(df_train, batchSize=data_loader_batch_size)
-#     validation_data_loader = custom_data_loader(df_val, batchSize=data_loader_batch_size)
-#
-#     # Define model class object
-#     MTL_model = ModelTraining(training_data_loader, validation_data_loader, epochs=60)
-#     # Train model
-#     MTL_model.train()
-#     # Save trained model
-#     MTL_model.save_model()
+    def plot_task2_loss(self):
+        loss_values = self.history.history['task_2_loss']
+        val_loss_values = self.history.history['val_task_2_loss']
+        epochs = range(1, len(loss_values) + 1)
 
-# test = pd.DataFrame(data=[[5.62, 1.26, -0.49, 6.63, 3.77, -0.13, -0.91]], columns=['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'z'])
-# X = inference_input_processing(test)
-#
+        # plot
+        plt.plot(epochs, loss_values, '--o', label='Training loss task 2')
+        plt.plot(epochs, val_loss_values, '-X', label='Validation task 2')
+        plt.title('Training and validation loss')
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.legend()
+
+
+if __name__ == '__main__':
+    # load dataset
+    data = pd.read_csv("./data/data.csv")
+    N = 900000
+    batch_size = 12 # define model training batch size
+    data_loader_batch_size = int(batch_size / 2) # batch size for each task (number of samples from each task must be equal in final batch)
+
+    # Simple manual split to train and validation datasets
+    ## TODO: furhter improvments dynamic train and validation split in one generator
+    df_train = data.iloc[batch_size:N, :]
+    df_val = pd.concat([data.iloc[:batch_size, :], data.iloc[N:N + batch_size, :]], ignore_index=True)
+
+    # Crate gernerator objects for train and validation
+    training_data_loader = custom_data_loader(df_train, batchSize=data_loader_batch_size)
+    validation_data_loader = custom_data_loader(df_val, batchSize=data_loader_batch_size)
+
+    # Define model class object
+    MTL_model = ModelTraining(training_data_loader, validation_data_loader, epochs=60)
+    # Train model
+    MTL_model.train()
+    # Save trained model
+    MTL_model.save_model()
+
+test = pd.DataFrame(data=[[5.62, 1.26, -0.49, 6.63, 3.77, -0.13, -0.91]], columns=['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'z'])
+X = inference_input_processing(test)
+
 #
 # MTL_model.load_model()
 # MTL_model.inference(X)
