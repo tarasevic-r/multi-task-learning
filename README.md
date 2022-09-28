@@ -1,0 +1,2 @@
+# multi-task-learning
+Multi-task learning project, where the main task has very little data, but the auxiliary task has a lot of data. The expectation is that the data from the second task will generalise the model well and then a small amount of data from the first task will be sufficient to train the network and avoid the overfiting problem. The main task is binary classification, the auxiliary task is regression
