@@ -1,0 +1,17 @@
+__pycache__
+
+# JetBrains IDE
+.idea/*
+
+# pycharm
+test_venv
+test_venv/*
+
+
+
+# keep artifacts folder
+!train_model/artifacts/
+train_model/artifacts/*
+train_model/artifacts/.gitkeep
+/Pipfile
+/Pipfile.lock
