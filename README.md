@@ -45,6 +45,9 @@ pip install -r requirements.txt
 ```
 
 ## Run model training
+Details about model architecture and training are presented in `notebooks/train_model.ipynb`
+
+
 From command line in a root project directory
 ```
 python3 -m run_training
