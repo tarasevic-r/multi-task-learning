@@ -26,7 +26,7 @@ To create a virtual environemnt in the local file system the syntax is:
 virtualenv --python <python version> <name of environment> 
 ```
 
-For example, to create an empty Python 3.6 environment: 
+For example, to create an empty Python 3.8 environment: 
 ```
 virtualenv --python 3.8 mtl_project
 ```
