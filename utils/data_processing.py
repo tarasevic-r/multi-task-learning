@@ -14,3 +14,10 @@ def inference_input_processing(df: pd.DataFrame) -> np.array:
     # ensure columns order
     df = df[['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'z', 'mask_t1', 'mask_t2']]
     return np.array(df.values.tolist())
+
+
+def predict(input_data: np.array, model) -> None:
+    input_df = pd.DataFrame(data=[input_data], columns=['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'z'])
+    X = inference_input_processing(input_df)
+
+    model.inference(X)

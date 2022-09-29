@@ -30,7 +30,7 @@ log = logging.getLogger(__name__)
 
 
 class ModelTraining:
-    def __init__(self, training_data_loader, validation_data_loader, batch_size=12, epochs=10,
+    def __init__(self, training_data_loader=None, validation_data_loader=None, batch_size=12, epochs=10,
                  trained_model_path=''):
         # self.model = model
         self.training_data_loader = training_data_loader
@@ -70,10 +70,11 @@ class ModelTraining:
         :return:
         """
         predictions = self.model.predict(input)
+        y1_prob = predictions[0][0][0]
         y1 = self._sigmoid_to_binary(predictions[0][0][0])
         y2 = predictions[1][0][0]
 
-        print("Task 1 prediction: %d \nTask 2 prediction: %.3f" % (y1, y2))
+        return "Task 1 prediction: {} (P={}) \nTask 2 prediction: {}".format(y1, y1_prob, y2)
 
 
     def save_model(self):
