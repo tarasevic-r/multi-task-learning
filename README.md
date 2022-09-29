@@ -62,3 +62,12 @@ streamlit run app.py
 ```
 
 ![My Image](inference.png)
+
+# Further improvements
+This model is made for learning purposes, so it is one of the simpler versions with a basic functionality, possible improvements:
+1. Write custom loss functions for each task
+2. Write a custom training step function and adaptively change the learning rate during training
+3. Fine tune model hyperparamters
+4. Adaptively change the loss weights for each task depending on the epoch, e.g. start with a higher loss weight in task 2 and a lower loss weight in task 1 and gradually change the ratio, i.e. decrease the loss weight of task 2 and increase the loss weight of task 1. In this way, the model could generalize better
+5. Refactor the training pipeline so that the training parameters can be passed via a config file, that would give more control over model parameters
+6. Try upsampling techniques for task 1 dataset (e.g. SMOTE)
