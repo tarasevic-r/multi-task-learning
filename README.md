@@ -8,6 +8,8 @@ of data from the first task will be sufficient to train the network and avoid
 the overfiting problem. The main task is binary classification, the auxiliary 
 task is regression.
 
+Details about model architecture and training are presented in `notebooks/train_model.ipynb`
+
 
 ## Prerequisites 
 1. Framework: Python 3.8
@@ -45,8 +47,6 @@ pip install -r requirements.txt
 ```
 
 ## Run model training
-Details about model architecture and training are presented in `notebooks/train_model.ipynb`
-
 
 From command line in a root project directory
 ```
