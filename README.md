@@ -8,7 +8,7 @@ of data from the first task will be sufficient to train the network and avoid
 the overfiting problem. The main task is binary classification, the auxiliary 
 task is regression.
 
-Details about model architecture and training are presented in `notebooks/train_model.ipynb`
+Details about model architecture and training are presented in `./notebooks/train_model.ipynb`
 
 
 ## Prerequisites 
