@@ -74,3 +74,7 @@ This model is made for learning purposes, so it is one of the simpler versions w
 4. Adaptively change the loss weights for each task depending on the epoch, e.g. start with a higher loss weight in task 2 and a lower loss weight in task 1 and gradually change the ratio, i.e. decrease the loss weight of task 2 and increase the loss weight of task 1. In this way, the model could generalize better
 5. Refactor the training pipeline so that the training parameters can be passed via a config file, that would give more control over model parameters
 6. Try upsampling techniques for task 1 dataset (e.g. SMOTE)
+
+
+## Current model architecture:
+![model](https://user-images.githubusercontent.com/59992084/197940016-9703edd3-2c9c-4d20-99d3-09c5f5ebf4ba.png)
