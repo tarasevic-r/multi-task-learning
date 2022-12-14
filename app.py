@@ -4,6 +4,10 @@ import pandas as pd
 from run_training import ModelTraining
 from utils.data_processing import inference_input_processing
 
+# Load last trained NN model
+MTL_model = ModelTraining()
+MTL_model.load_model(load_last_trained_model=True)
+
 # Title
 st.header("Inference app for Multi-task-learning")
 
@@ -25,10 +29,6 @@ z = st.number_input("Enter z", value=-0.91)
 
 # If button is pressed
 if st.button("Predict"):
-    # Load last trained NN model
-    MTL_model = ModelTraining()
-    MTL_model.load_model(load_last_trained_model=True)
-
     # Store inputs into dataframe
     raw_input = pd.DataFrame([[x1, x2, x3, x4, x5, x6, z]],
                      columns=['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'z'])
